@@ -22,8 +22,8 @@ const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log('SQL Database Connected Successfully (TiDB/MySQL)');
-    // Sync models - in production you might want to use migrations
-    await sequelize.sync({ alter: true });
+    // Sync models - only create tables if they don't exist
+    await sequelize.sync();
     console.log('Database Synced');
   } catch (error) {
     console.error(`Unable to connect to the database: ${error.message}`);
