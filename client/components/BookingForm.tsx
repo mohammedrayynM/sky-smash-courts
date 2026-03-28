@@ -7,9 +7,10 @@ interface BookingFormProps {
     selectedSlot: string | null;
     selectedDate: Date;
     selectedSport: string;
+    isLoading: boolean;
 }
 
-export default function BookingForm({ onSubmit, selectedSlot, selectedDate, selectedSport }: BookingFormProps) {
+export default function BookingForm({ onSubmit, selectedSlot, selectedDate, selectedSport, isLoading }: BookingFormProps) {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -32,8 +33,25 @@ export default function BookingForm({ onSubmit, selectedSlot, selectedDate, sele
     return (
         <div className="bg-card p-6 rounded-2xl shadow-xl border border-border animate-fade-in">
             <h3 className="text-xl font-semibold mb-6 text-foreground">Complete Booking</h3>
-            <div className="mb-4 text-sm text-muted-foreground">
-                Booking <span className="text-primary font-bold">{selectedSport}</span> for <span className="text-foreground font-medium">{selectedDate.toDateString()}</span> at <span className="text-foreground font-medium">{selectedSlot}</span>
+            <div className="mb-4 text-sm text-muted-foreground p-3 bg-muted/30 rounded-lg">
+                <div className="flex justify-between mb-1">
+                    <span>Sport:</span>
+                    <span className="text-primary font-bold">{selectedSport}</span>
+                </div>
+                <div className="flex justify-between mb-1">
+                    <span>Date:</span>
+                    <span className="text-foreground font-medium">{selectedDate.toLocaleDateString()}</span>
+                </div>
+                <div className="flex justify-between mb-1">
+                    <span>Slot:</span>
+                    <span className="text-foreground font-medium">{selectedSlot}</span>
+                </div>
+                <div className="flex justify-between mt-2 pt-2 border-t border-border/50 text-base">
+                    <span className="font-bold text-foreground">Total Amount:</span>
+                    <span className="text-primary font-extrabold text-lg">
+                        ₹{selectedSport === "Turf Football" ? "1200" : "600"}
+                    </span>
+                </div>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -71,9 +89,20 @@ export default function BookingForm({ onSubmit, selectedSlot, selectedDate, sele
                 </div>
                 <button
                     type="submit"
-                    className="w-full rounded-md bg-primary py-2.5 px-4 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isLoading}
+                    className="w-full rounded-md bg-primary py-2.5 px-4 text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                 >
-                    Confirm Booking
+                    {isLoading ? (
+                        <>
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Preparing Payment...
+                        </>
+                    ) : (
+                        `Confirm & Pay ₹${selectedSport === "Turf Football" ? "1200" : "600"}`
+                    )}
                 </button>
             </form>
         </div>

@@ -69,6 +69,10 @@ export default function BookPage() {
                 throw new Error("Failed to create payment order");
             }
 
+            if (!window.Razorpay) {
+                throw new Error("Razorpay SDK not loaded. Please refresh the page.");
+            }
+
             // 2. Initialize Razorpay Checkout
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'YOUR_RAZORPAY_KEY_ID_HERE',
@@ -124,7 +128,15 @@ export default function BookPage() {
 
     return (
         <main className="min-h-screen flex flex-col bg-background relative overflow-hidden">
-            <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+            <Script 
+                src="https://checkout.razorpay.com/v1/checkout.js" 
+                strategy="afterInteractive" 
+                onLoad={() => console.log('Razorpay Script Loaded')}
+                onError={(e) => {
+                    console.error('Razorpay Script Load Error', e);
+                    setError('Payment gateway failed to load. Please try again or disable your adblocker.');
+                }}
+            />
             
             {/* Dynamic Background Image */}
             <div className="fixed inset-0 z-0 transition-opacity duration-1000">
@@ -213,6 +225,7 @@ export default function BookPage() {
                                         selectedSlot={selectedSlot}
                                         selectedDate={selectedDate}
                                         selectedSport={selectedSport}
+                                        isLoading={isBooking}
                                     />
                                 </>
                             )}

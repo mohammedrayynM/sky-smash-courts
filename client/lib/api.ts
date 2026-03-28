@@ -8,7 +8,10 @@ export const api = {
                 'Content-Type': 'application/json',
             },
         });
-        if (!res.ok) throw new Error('API Error');
+        if (!res.ok) {
+            const error = await res.json().catch(() => ({ message: 'API Error' }));
+            throw new Error(error.message || 'API Error');
+        }
         return res.json();
     },
 
@@ -20,7 +23,10 @@ export const api = {
             },
             body: JSON.stringify(body),
         });
-        if (!res.ok) throw new Error('API Error');
+        if (!res.ok) {
+            const error = await res.json().catch(() => ({ message: 'API Error' }));
+            throw new Error(error.message || 'API Error');
+        }
         return res.json();
     },
 
@@ -32,7 +38,10 @@ export const api = {
             },
             body: JSON.stringify(body),
         });
-        if (!res.ok) throw new Error('API Error');
+        if (!res.ok) {
+            const error = await res.json().catch(() => ({ message: 'API Error' }));
+            throw new Error(error.message || 'API Error');
+        }
         return res.json();
     },
 
@@ -43,7 +52,10 @@ export const api = {
                 'Content-Type': 'application/json',
             },
         });
-        if (!res.ok) throw new Error('API Error');
+        if (!res.ok) {
+            const error = await res.json().catch(() => ({ message: 'API Error' }));
+            throw new Error(error.message || 'API Error');
+        }
         return res.json();
     },
 };

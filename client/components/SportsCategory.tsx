@@ -4,20 +4,23 @@ const sports = [
     {
         name: 'Turf Football',
         description: '5v5 and 7v7 FIFA standard turf grounds.',
+        price: '₹1200 / hour',
         icon: '⚽',
         image: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1000&auto=format&fit=crop'
     },
     {
         name: 'Badminton',
         description: 'Indoor wooden courts with BWF approved mats.',
+        price: '₹600 / hour',
         icon: '🏸',
         image: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?q=80&w=1000&auto=format&fit=crop'
     },
     {
         name: 'Other Activities',
         description: 'Box Cricket, Swimming, and more.',
+        price: '₹600 / hour',
         icon: '🏊',
-        image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2000&auto=format&fit=crop'
     },
 ];
 
@@ -48,6 +51,7 @@ export default function SportsCategory() {
                                 <h3 className="text-3xl font-bold text-white group-hover:text-primary transition-colors">
                                     {sport.name}
                                 </h3>
+                                <p className="mt-1 text-primary font-bold">{sport.price}</p>
                                 <p className="mt-2 text-sm leading-6 text-gray-300">
                                     {sport.description}
                                 </p>
